@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminController">
+  <tabs>
+    <Tab text="Obsługa użytkowników">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TabPane prefHeight="420.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Wszyscy">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="383.0" prefWidth="600.0">
+                                 <children>
+                                    <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="31.0" layoutY="14.0" mnemonicParsing="false" onAction="#uzytkOdswiez" prefHeight="30.0" prefWidth="68.0" text="Odśwież" textAlignment="CENTER" />
+                                    <Button fx:id="wyloguj" alignment="CENTER" contentDisplay="BOTTOM" layoutX="501.0" layoutY="14.0" mnemonicParsing="false" onAction="#wyloguj" prefHeight="30.0" prefWidth="68.0" text="Wyloguj" />
+                                    <TableView fx:id="uzytkTable" layoutX="31.0" layoutY="62.0" prefHeight="286.0" prefWidth="538.0">
+                                      <columns>
+                                        <TableColumn fx:id="uzytkIdTable" prefWidth="24.799989700317383" text="ID" />
+                                        <TableColumn fx:id="uzytkImieTable" prefWidth="63.199981689453125" text="Imię" />
+                                          <TableColumn fx:id="uzytkNazwiskoTable" prefWidth="74.39998626708984" text="Nazwisko" />
+                                          <TableColumn fx:id="uzytkLoginTable" prefWidth="79.20001220703125" text="Login" />
+                                          <TableColumn fx:id="uzytkHasloTable" prefWidth="77.5999755859375" text="Hasło" />
+                                          <TableColumn fx:id="uzytkEmailTable" prefWidth="146.4000244140625" text="Email" />
+                                          <TableColumn fx:id="uzytkDataTable" prefWidth="68.80001831054688" text="Data" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Dodawanie">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="321.0" prefWidth="565.0">
+                                 <children>
+                                    <AnchorPane layoutY="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="392.0" prefWidth="600.0">
+                                       <children>
+                                          <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="272.0" layoutY="311.0" mnemonicParsing="false" onAction="#dodaj" text="Dodaj">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Button>
+                                          <TextField fx:id="obslugaImie" layoutX="252.0" layoutY="95.0" promptText="first name" />
+                                          <TextField fx:id="obslugaNazwisko" layoutX="252.0" layoutY="133.0" promptText="surname" />
+                                          <TextField fx:id="obslugaLogin" layoutX="252.0" layoutY="172.0" promptText="username" />
+                                          <PasswordField fx:id="obslugaHaslo" layoutX="252.0" layoutY="211.0" promptText="password" />
+                                          <TextField fx:id="obslugaEmail" layoutX="252.0" layoutY="250.0" promptText="e-mail" />
+                                          <Label layoutX="208.0" layoutY="99.0" text="Imię:" />
+                                          <Label layoutX="182.0" layoutY="137.0" text="Nazwisko:" />
+                                          <Label layoutX="204.0" layoutY="176.0" text="Login:" />
+                                          <Label layoutX="205.0" layoutY="215.0" text="Hasło:" />
+                                          <Label layoutX="203.0" layoutY="254.0" text="E-mail:" />
+                                          <Label layoutX="194.0" layoutY="41.0" text="Podaj dane nowego użytkownika...">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="Usuwanie">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="BOTTOM" layoutX="174.0" layoutY="102.0" text="Wybierz login użytkownika, aby usunąć...">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="obslugaLoginUsun" layoutX="224.0" layoutY="158.0" prefWidth="150.0" />
+                                    <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="258.0" layoutY="258.0" mnemonicParsing="false" onAction="#usun" prefHeight="30.0" prefWidth="84.0" text="Usuń">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Zmiana hasła">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="BOTTOM" layoutX="154.0" layoutY="65.0" text="Wybierz login użytkownika, aby zmienić hasło...">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="obslugaLoginZmien" layoutX="225.0" layoutY="109.0" prefWidth="150.0" />
+                                    <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="258.0" layoutY="297.0" mnemonicParsing="false" onAction="#zmien" prefHeight="30.0" prefWidth="84.0" text="Zmień">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Label alignment="CENTER" contentDisplay="BOTTOM" layoutX="169.0" layoutY="179.0" text="Podaj nowe hasło:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" contentDisplay="BOTTOM" layoutX="154.0" layoutY="218.0" text="Powtórz nowe hasło:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <PasswordField fx:id="obslugaNoweHaslo1" layoutX="289.0" layoutY="176.0" />
+                                    <PasswordField fx:id="obslugaNoweHaslo2" layoutX="289.0" layoutY="215.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Obsługa wydarzeń">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TabPane prefHeight="420.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Wszystkie">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="368.0" prefWidth="600.0">
+                                 <children>
+                                    <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="31.0" layoutY="14.0" mnemonicParsing="false" onAction="#wydOdswiez" prefHeight="30.0" prefWidth="68.0" text="Odśwież" textAlignment="CENTER" />
+                                    <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="501.0" layoutY="14.0" mnemonicParsing="false" onAction="#wyloguj" prefHeight="30.0" prefWidth="68.0" text="Wyloguj" />
+                                    <TableView fx:id="wydTable" layoutX="31.0" layoutY="62.0" prefHeight="290.0" prefWidth="538.0">
+                                      <columns>
+                                        <TableColumn fx:id="wydIdTable" prefWidth="30.39999008178711" text="ID" />
+                                        <TableColumn fx:id="wydNazwaTable" prefWidth="169.5999755859375" text="Nazwa" />
+                                          <TableColumn fx:id="wydAgendaTable" prefWidth="262.40003967285156" text="Agenda" />
+                                          <TableColumn fx:id="wydTerminTable" minWidth="0.0" prefWidth="72.79998779296875" text="Termin" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Dodawanie">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="390.0" prefWidth="600.0">
+                                       <children>
+                                          <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="258.0" layoutY="309.0" mnemonicParsing="false" onAction="#dodajWyd" text="Dodaj">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Button>
+                                          <TextField fx:id="wydNazwaDodaj" layoutX="94.0" layoutY="123.0" />
+                                          <Label layoutX="46.0" layoutY="127.0" text="Nazwa:" />
+                                          <Label layoutX="278.0" layoutY="93.0" text="Agenda:" />
+                                          <Label layoutX="45.0" layoutY="163.0" text="Termin:" />
+                                          <Label layoutX="197.0" layoutY="43.0" text="Podaj dane nowego wydarzenia...">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextArea fx:id="wydAgendaDodaj" layoutX="280.0" layoutY="122.0" prefHeight="146.0" prefWidth="276.0" />
+                                          <DatePicker fx:id="wydTerminDodaj" editable="false" layoutX="94.0" layoutY="159.0" prefHeight="26.0" prefWidth="148.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="Usuwanie">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="BOTTOM" layoutX="174.0" layoutY="103.0" text="Wybierz nazwę wydarzenia, aby usunąć...">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="wydNazwaUsun" layoutX="225.0" layoutY="157.0" prefWidth="150.0" />
+                                    <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="258.0" layoutY="257.0" mnemonicParsing="false" onAction="#usunWyd" prefHeight="30.0" prefWidth="84.0" text="Usuń">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Modyfikacja">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="390.0" prefWidth="600.0">
+                                       <children>
+                                          <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="254.0" layoutY="310.0" mnemonicParsing="false" onAction="#wydZmien" text="Zmień">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Button>
+                                          <TextField fx:id="wydNazwaZmien" layoutX="97.0" layoutY="164.0" />
+                                          <Label layoutX="46.0" layoutY="168.0" text="Nazwa:" />
+                                          <Label layoutX="278.0" layoutY="137.0" text="Agenda:" />
+                                          <Label layoutX="45.0" layoutY="204.0" text="Termin:" />
+                                          <TextArea fx:id="wydAgendaZmien" layoutX="278.0" layoutY="165.0" prefHeight="109.0" prefWidth="276.0" />
+                                          <DatePicker fx:id="wydTerminZmien" editable="false" layoutX="97.0" layoutY="200.0" prefHeight="26.0" prefWidth="148.0" />
+                                          <Label alignment="CENTER" contentDisplay="BOTTOM" layoutX="164.0" layoutY="40.0" text="Wybierz ID wydarzenia, aby zmodyfikować...">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox fx:id="wydIdZmien" layoutX="209.0" layoutY="81.0" onAction="#wydarzeniaChanged" prefWidth="150.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Obsługa zapisów">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TabPane prefHeight="420.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Zatwierdzone">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="600.0">
+                                 <children>
+                                    <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="462.0" layoutY="16.0" mnemonicParsing="false" onAction="#zapisOdswiez" prefHeight="30.0" prefWidth="68.0" text="Odśwież" textAlignment="CENTER" />
+                                    <TableView fx:id="zatwTable" layoutX="70.0" layoutY="62.0" prefHeight="287.0" prefWidth="460.0">
+                                      <columns>
+                                        <TableColumn fx:id="zatwIdTable" prefWidth="36.79998779296875" text="ID" />
+                                        <TableColumn fx:id="zatwIdUTable" prefWidth="105.60003662109375" text="ID użytkownika" />
+                                          <TableColumn fx:id="zatwIdWTable" prefWidth="98.4000244140625" text="ID wydarzenia" />
+                                          <TableColumn fx:id="zatwTypUczestnictwaTable" prefWidth="111.20001220703125" text="Typ uczestnictwa" />
+                                          <TableColumn fx:id="zatwWyzywienieTable" prefWidth="104.0" text="Wyżywienie" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Niezatwierdzone">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="462.0" layoutY="16.0" mnemonicParsing="false" onAction="#zapisOdswiez" prefHeight="30.0" prefWidth="68.0" text="Odśwież" textAlignment="CENTER" />
+                                    <TableView fx:id="niezatwTable" layoutX="70.0" layoutY="63.0" prefHeight="287.0" prefWidth="460.0">
+                                       <columns>
+                                          <TableColumn fx:id="niezatwIdTable" prefWidth="36.79998779296875" text="ID" />
+                                          <TableColumn fx:id="niezatwIdUTable" prefWidth="105.60003662109375" text="ID użytkownika" />
+                                          <TableColumn fx:id="niezatwIdWTable" prefWidth="98.4000244140625" text="ID wydarzenia" />
+                                          <TableColumn fx:id="niezatwTypUczestnictwaTable" prefWidth="111.20001220703125" text="Typ uczestnictwa" />
+                                          <TableColumn fx:id="niezatwWyzywienieTable" prefWidth="103.99993896484375" text="Wyżywienie" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="Obsługa">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="207.0" layoutY="250.0" mnemonicParsing="false" onAction="#potwierdz" prefHeight="30.0" prefWidth="84.0" text="Potwierdź">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="307.0" layoutY="250.0" mnemonicParsing="false" onAction="#odrzuc" prefHeight="30.0" prefWidth="84.0" text="Odrzuć">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Label layoutX="148.0" layoutY="99.0" text="Wybierz ID zapisu, aby potwierdzić lub odrzucić...">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="idZapis" layoutX="224.0" layoutY="152.0" prefWidth="150.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+  </tabs>
+</TabPane>
