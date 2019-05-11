@@ -1,7 +1,9 @@
 package model;
 
+import javax.persistence.*;
+
 @Entity
-@Table(name = "wydarzenia")
+@Table (name = "wydarzenia")
 public class Event {
     @Id
     @Column(name="id")

@@ -1,5 +1,7 @@
 package model;
 
+import javax.persistence.*;
+
 @Entity
 @Table(name = "uzytkownicy")
 public class User {

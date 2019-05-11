@@ -7,8 +7,9 @@ import org.hibernate.cfg.Configuration;
 public class HibernateFactory {
     public SessionFactory getSessionFactory() {
         Configuration configuration = new Configuration().configure();
-        configuration.addAnnotatedClass(entity.User.class);
-        configuration.addAnnotatedClass(entity.Task.class);
+        configuration.addAnnotatedClass(model.User.class);
+        configuration.addAnnotatedClass(model.Event.class);
+        configuration.addAnnotatedClass(model.Zapis.class);
         StandardServiceRegistryBuilder registryBuilder =
                 new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
         SessionFactory sessionFactory = configuration.buildSessionFactory(registryBuilder.build());

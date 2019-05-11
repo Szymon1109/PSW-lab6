@@ -1,5 +1,7 @@
 package model;
 
+import javax.persistence.*;
+
 public class Zapis {
     @Id
     @Column(name="id")
