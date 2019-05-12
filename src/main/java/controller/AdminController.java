@@ -174,7 +174,7 @@ public class AdminController implements Initializable {
     }
 
     public void setItemsInUzytkTable(){
-        UserDAO userDAO = new UserDAOImpl();
+        UserDAO userDAO = new UserDAO();
         List<User> data = userDAO.findAllUsers();
         ObservableList<User> list = FXCollections.observableArrayList(data);
 
@@ -257,7 +257,7 @@ public class AdminController implements Initializable {
     }
 
     public boolean checkLogin(String login){
-        UserDAO userDAO = new UserDAOImpl();
+        UserDAO userDAO = new UserDAO();
 
         if(userDAO.findOne(login)){
             return false;
@@ -273,7 +273,7 @@ public class AdminController implements Initializable {
     }
 
     public void addData(User user){
-        UserDAO userDAO = new UserDAOImpl();
+        UserDAO userDAO = new UserDAO();
         userDAO.save(user);
     }
 
@@ -318,7 +318,7 @@ public class AdminController implements Initializable {
     }
 
     public void setItemsInObslugaLogin(){
-        UserDAO userDAO = new UserDAOImpl();
+        UserDAO userDAO = new UserDAO();
         List<User> data = userDAO.findAllUsers();
 
         ObservableList<String> list = FXCollections.observableArrayList();
@@ -338,7 +338,7 @@ public class AdminController implements Initializable {
         String login = obslugaLoginUsun.getValue();
         Integer id = null;
 
-        UserDAO userDAO = new UserDAOImpl();
+        UserDAO userDAO = new UserDAO();
         List<User> data = userDAO.findAllUsers();
 
         for (User user : data) {
@@ -347,7 +347,7 @@ public class AdminController implements Initializable {
                 break;
             }
         }
-        ZapisDAO zapisDAO = new ZapisDAOImpl();
+        ZapisDAO zapisDAO = new ZapisDAO();
         zapisDAO.deleteForUser(id);
     }
 
@@ -359,7 +359,7 @@ public class AdminController implements Initializable {
         else {
             deleteZapisyForUser();
 
-            UserDAO userDAO = new UserDAOImpl();
+            UserDAO userDAO = new UserDAO();
             String loginTxt = obslugaLoginUsun.getValue();
             userDAO.delete(loginTxt);
             uwaga("Wybrany użytkownik został usunięty!");
@@ -393,7 +393,7 @@ public class AdminController implements Initializable {
                     String loginTxt = obslugaLoginZmien.getValue();
                     String hasloTxt = obslugaNoweHaslo1.getText();
 
-                    UserDAO userDAO = new UserDAOImpl();
+                    UserDAO userDAO = new UserDAO();
                     userDAO.changePassword(loginTxt, hasloTxt);
                     uwaga("Wybranemu użytkownikowi zmieniono hasło!");
 
@@ -412,7 +412,7 @@ public class AdminController implements Initializable {
 
     @FXML
     public void setItemsInWydTable(){
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
         List<Event> data = eventDAO.findAllEvents();
         ObservableList<Event> list = FXCollections.observableArrayList(data);
 
@@ -455,7 +455,7 @@ public class AdminController implements Initializable {
                 String terminTxt = termin.toString();
 
                 Event event = new Event(nazwaTxt, agendaTxt, terminTxt);
-                EventDAO eventDAO = new EventDAOImpl();
+                EventDAO eventDAO = new EventDAO();
                 eventDAO.save(event);
 
                 uwaga("Dodano nowe wydarzenie!");
@@ -472,7 +472,7 @@ public class AdminController implements Initializable {
     }
 
     public boolean checkNazwa(String nazwa){
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
 
         if(eventDAO.findOne(nazwa)){
             return false;
@@ -483,7 +483,7 @@ public class AdminController implements Initializable {
     }
 
     public void setItemsInWydNazwaUsun(){
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
         List<Event> data = eventDAO.findAllEvents();
 
         ObservableList<String> list = FXCollections.observableArrayList();
@@ -496,7 +496,7 @@ public class AdminController implements Initializable {
     }
 
     public void setItemsInWydIdZmien(){
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
         List<Event> data = eventDAO.findAllEvents();
 
         ObservableList<Integer> list = FXCollections.observableArrayList();
@@ -513,7 +513,7 @@ public class AdminController implements Initializable {
         String nazwa = wydNazwaUsun.getValue();
         Integer id = null;
 
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
         List<Event> data = eventDAO.findAllEvents();
 
         for (Event event : data) {
@@ -522,7 +522,7 @@ public class AdminController implements Initializable {
                 break;
             }
         }
-        ZapisDAO zapisDAO = new ZapisDAOImpl();
+        ZapisDAO zapisDAO = new ZapisDAO();
         zapisDAO.deleteForEvent(id);
     }
 
@@ -534,7 +534,7 @@ public class AdminController implements Initializable {
         else {
             deleteZapisyForEvent();
 
-            EventDAO eventDAO = new EventDAOImpl();
+            EventDAO eventDAO = new EventDAO();
             String nazwaTxt = wydNazwaUsun.getValue();
             eventDAO.delete(nazwaTxt);
             uwaga("Wybrane wydarzenie zostało usunięte!");
@@ -559,7 +559,7 @@ public class AdminController implements Initializable {
     public void setNazwa(Integer wydarzenie){
         String nazwaTxt = null;
 
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
         List<Event> data = eventDAO.findAllEvents();
 
         for (Event event : data) {
@@ -575,7 +575,7 @@ public class AdminController implements Initializable {
     public void setAgenda(Integer wydarzenie){
         String agendaTxt = null;
 
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
         List<Event> data = eventDAO.findAllEvents();
 
         for (Event event : data) {
@@ -604,7 +604,7 @@ public class AdminController implements Initializable {
     public void setTermin(Integer wydarzenie){
         String terminTxt = null;
 
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
         List<Event> data = eventDAO.findAllEvents();
 
         for (Event event : data) {
@@ -634,7 +634,7 @@ public class AdminController implements Initializable {
                     String terminTxt = termin.toString();
 
                     Event event = new Event(idTxt, nazwaTxt, agendaTxt, terminTxt);
-                    EventDAO eventDAO = new EventDAOImpl();
+                    EventDAO eventDAO = new EventDAO();
                     eventDAO.update(event);
 
                     uwaga("Zmieniono wybrane wydarzenie!");
@@ -656,7 +656,7 @@ public class AdminController implements Initializable {
     }
 
     public void setItemsInZatwTable(){
-        ZapisDAO zapisDAO = new ZapisDAOImpl();
+        ZapisDAO zapisDAO = new ZapisDAO();
         List<Zapis> data = zapisDAO.findAllConfirmedZapis();
         ObservableList<Zapis> list = FXCollections.observableArrayList(data);
 
@@ -679,7 +679,7 @@ public class AdminController implements Initializable {
     }
 
     public void setItemsInNiezatwTable(){
-        ZapisDAO zapisDAO = new ZapisDAOImpl();
+        ZapisDAO zapisDAO = new ZapisDAO();
         List<Zapis> data = zapisDAO.findAllNotConfirmedZapis();
         ObservableList<Zapis> list = FXCollections.observableArrayList(data);
 
@@ -709,7 +709,7 @@ public class AdminController implements Initializable {
     }
 
     public void setItemsInIdZapis() {
-        ZapisDAO zapisDAO = new ZapisDAOImpl();
+        ZapisDAO zapisDAO = new ZapisDAO();
         List<Zapis> data = zapisDAO.findAllNotConfirmedZapis();
 
         ObservableList<Integer> list = FXCollections.observableArrayList();
@@ -729,7 +729,7 @@ public class AdminController implements Initializable {
             uwaga("Nie wybrano żadnego zapisu!");
         }
         else{
-            ZapisDAO zapisDAO = new ZapisDAOImpl();
+            ZapisDAO zapisDAO = new ZapisDAO();
             zapisDAO.confirm(idTxt);
             uwaga("Potwierdzono wybrany zapis!");
 
@@ -747,7 +747,7 @@ public class AdminController implements Initializable {
             uwaga("Nie wybrano żadnego zapisu!");
         }
         else{
-            ZapisDAO zapisDAO = new ZapisDAOImpl();
+            ZapisDAO zapisDAO = new ZapisDAO();
             zapisDAO.reject(idTxt);
             uwaga("Odrzucono wybrany zapis!");
 

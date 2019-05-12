@@ -97,7 +97,7 @@ public class UserController implements Initializable {
     }
 
     public void setItemsInWydarzenia(){
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
         List<Event> data = eventDAO.findAllEvents();
 
         ObservableList<String> list = FXCollections.observableArrayList();
@@ -126,7 +126,7 @@ public class UserController implements Initializable {
     }
 
     public void setItemsInZatwWyd(){
-        EventDAO event = new EventDAOImpl();
+        EventDAO event = new EventDAO();
         List<Event> data = event.findConfirmedEventsForUser(idUzytkownika);
         ObservableList<Event> list = FXCollections.observableArrayList(data);
 
@@ -146,7 +146,7 @@ public class UserController implements Initializable {
     }
 
     public void setItemsInNiezatwWyd(){
-        EventDAO event = new EventDAOImpl();
+        EventDAO event = new EventDAO();
         List<Event> data = event.findNotConfirmedEventsForUser(idUzytkownika);
         ObservableList<Event> list = FXCollections.observableArrayList(data);
 
@@ -178,7 +178,7 @@ public class UserController implements Initializable {
     public void setAgenda(String wydarzenie){
         String agendaTxt = null;
 
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
         List<Event> data = eventDAO.findAllEvents();
 
         for (Event event : data) {
@@ -207,7 +207,7 @@ public class UserController implements Initializable {
     public void setTermin(String wydarzenie){
         String terminTxt = null;
 
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
         List<Event> data = eventDAO.findAllEvents();
 
         for (Event event : data) {
@@ -230,7 +230,7 @@ public class UserController implements Initializable {
             getData();
             Zapis zapis = new Zapis(idUzytkownika, idWyd, typUczestnictwaTxt, wyzywienieTxt);
 
-            ZapisDAO zapisDAO = new ZapisDAOImpl();
+            ZapisDAO zapisDAO = new ZapisDAO();
             zapisDAO.save(zapis);
 
             uwaga("Zapisano na podane wydarzenie!");
@@ -248,7 +248,7 @@ public class UserController implements Initializable {
         Integer id = null;
 
         List<Event> data = FXCollections.observableArrayList();
-        EventDAO eventDAO = new EventDAOImpl();
+        EventDAO eventDAO = new EventDAO();
         data = eventDAO.findAllEvents();
 
         for(Event event : data){
@@ -307,7 +307,7 @@ public class UserController implements Initializable {
         Integer id = 0;
 
         List<User> data;
-        UserDAO userDAO = new UserDAOImpl();
+        UserDAO userDAO = new UserDAO();
         data = userDAO.findAllUsers();
 
         for(User user : data){

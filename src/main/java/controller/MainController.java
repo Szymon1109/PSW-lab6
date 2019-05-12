@@ -1,7 +1,6 @@
 package controller;
 
 import dao.UserDAO;
-import dao.UserDAOImpl;
 import email.Email;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -98,7 +97,7 @@ public class MainController {
     }
 
     public boolean checkAccess(String login, String haslo){
-        UserDAO userDAO = new UserDAOImpl();
+        UserDAO userDAO = new UserDAO();
 
         if(userDAO.findOne(login, haslo)){
             return true;
@@ -109,7 +108,7 @@ public class MainController {
     }
 
     public String getUprawnienia(String login){
-        UserDAO userDAO = new UserDAOImpl();
+        UserDAO userDAO = new UserDAO();
         String uprawnienia = userDAO.whoIs(login);
 
         return uprawnienia;
@@ -195,7 +194,7 @@ public class MainController {
     }
 
     public boolean checkLogin(String login){
-        UserDAO userDAO = new UserDAOImpl();
+        UserDAO userDAO = new UserDAO();
 
         if(userDAO.findOne(login)){
             return false;
@@ -220,7 +219,7 @@ public class MainController {
     }
 
     public void addData(User user){
-        UserDAO userDAO = new UserDAOImpl();
+        UserDAO userDAO = new UserDAO();
         userDAO.save(user);
     }
 
