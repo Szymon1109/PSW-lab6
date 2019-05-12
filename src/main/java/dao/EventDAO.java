@@ -1,9 +1,11 @@
 package dao;
 
+import database.HibernateFactory;
 import model.Event;
 import javafx.collections.FXCollections;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,25 +13,19 @@ public class EventDAO{
 
     public List<Event> findAllEvents(){
         List<Event> data = FXCollections.observableArrayList();
-        String query = "SELECT * FROM wydarzenia";
-        SQLConnection conn = new SQLConnection();
-        ResultSet rs = conn.makeQuery(query);
 
-        try{
-            while(rs.next()){
-                Integer id = rs.getInt("id");
-                String nazwa = rs.getString("nazwa");
-                String agenda = rs.getString("agenda");
-                String termin = rs.getString("termin");
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
 
-                Event row = new Event(id, nazwa, agenda, termin);
-                data.add(row);
-            }
-        } catch(SQLException e){
+        try {
+            Query query = session.createQuery("FROM wydarzenia");
+            data = query.list();
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
-            conn.closeConnect(rs);
+        } finally {
+            session.close();
         }
+
         return data;
     }
 
@@ -47,87 +43,108 @@ public class EventDAO{
 
     public List<Event> getData(String query){
         List<Integer> ids = new ArrayList<>();
-        SQLConnection conn1 = new SQLConnection();
-        ResultSet rs1 = conn1.makeQuery(query);
 
-        try{
-            while(rs1.next()){
-                Integer id_wydarzenia = rs1.getInt("id_wydarzenia");
-                ids.add(id_wydarzenia);
-            }
-        } catch(SQLException e){
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+
+        try {
+            Query newQuery = session.createQuery(query);
+            ids = newQuery.list();
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
-            conn1.closeConnect();
+        } finally {
+            session.close();
         }
 
         List<Event> data = FXCollections.observableArrayList();
+
         for(Integer Id : ids){
+            List<Event> newData;
             String query2 = "SELECT * FROM wydarzenia WHERE id=" + Id + ";";
-            SQLConnection conn2 = new SQLConnection();
-            ResultSet rs2 = conn2.makeQuery(query2);
 
-            try{
-                while(rs2.next()){
-                    Integer id_wydarzenia = rs2.getInt("id");
-                    String nazwa = rs2.getString("nazwa");
-                    String agenda = rs2.getString("agenda");
-                    String termin = rs2.getString("termin");
+            HibernateFactory hibernateFactory2 = new HibernateFactory();
+            Session session2 = hibernateFactory2.getSessionFactory().openSession();
 
-                    Event event = new Event(id_wydarzenia, nazwa, agenda, termin);
-                    data.add(event);
-                }
-            } catch(SQLException e){
+            try {
+                Query newQuery = session2.createQuery(query);
+                newData = newQuery.list();
+                data.addAll(newData);
+            } catch (Exception e) {
                 e.printStackTrace();
-            } finally{
-                conn2.closeConnect();
+            } finally {
+                session.close();
             }
         }
         return data;
     }
 
     public Boolean findOne(String nazwa){
-        String query = "SELECT * FROM wydarzenia WHERE nazwa = '" + nazwa + "';";
+        List<Event> data = FXCollections.observableArrayList();
 
-        SQLConnection conn = new SQLConnection();
-        ResultSet rs = conn.makeQuery(query);
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
 
-        try{
-            if(rs.next()){
-                return true;
-            }
-        } catch (SQLException e) {
+        try {
+            Query query = session.createQuery(String.format("FROM wydarzenia WHERE nazwa = '%s'", nazwa));
+            data = query.list();
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
-            conn.closeConnect(rs);
+        } finally {
+            session.close();
         }
-        return false;
+
+        return !data.isEmpty();
     }
 
     public void save(Event event){
-        String query = "INSERT INTO wydarzenia(nazwa, agenda, termin) VALUES ('" +
-                event.getNazwa() + "', '" + event.getAgenda() + "', '" + event.getTermin() + "');";
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
-        SQLConnection conn = new SQLConnection();
-        conn.makeQueryToDatabase(query);
-        conn.closeConnect();
+        try {
+            session.save(event);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
     public void update(Event event){
-        String query = "UPDATE wydarzenia SET nazwa='" + event.getNazwa() + "', " +
-                "agenda='" + event.getAgenda() + "', termin='" + event.getTermin() + "' " +
-                "WHERE id=" + event.getId() + ";";
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
-        SQLConnection conn = new SQLConnection();
-        conn.makeQueryToDatabase(query);
-        conn.closeConnect();
+        try {
+            Event newEvent = session.find(Event.class, event.getId());
+            newEvent.setNazwa(event.getNazwa());
+            newEvent.setAgenda(event.getAgenda());
+            newEvent.setTermin(event.getTermin());
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
     public void delete(String nazwa){
-        String query = "DELETE FROM wydarzenia WHERE nazwa='" + nazwa + "';";
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
-        SQLConnection conn = new SQLConnection();
-        conn.makeQueryToDatabase(query);
-        conn.closeConnect();
+        try {
+            Event event = session.find(Event.class, nazwa);
+            session.delete(event);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 }
