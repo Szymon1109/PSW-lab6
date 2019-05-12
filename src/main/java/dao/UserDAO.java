@@ -1,27 +1,31 @@
 package dao;
 
+import database.HibernateFactory;
 import javafx.collections.FXCollections;
 import model.User;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import java.util.List;
 
 public class UserDAO{
 
     public Boolean findUser(String query) {
-        SQLConnection conn = new SQLConnection();
-        ResultSet rs = conn.makeQuery(query);
+        List<User> data = FXCollections.observableArrayList();
 
-        try{
-            if(rs.next()){
-                return true;
-            }
-        } catch (SQLException e) {
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+
+        try {
+            Query newQuery = session.createQuery(query);
+            data = newQuery.list();
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
-            conn.closeConnect(rs);
+        } finally {
+            session.close();
         }
-        return false;
+
+        return !data.isEmpty();
     }
 
     public Boolean findOne(String login, String haslo){
@@ -36,79 +40,89 @@ public class UserDAO{
     }
 
     public String whoIs(String login){
-        String query = "SELECT * FROM uzytkownicy WHERE login = '" + login + "';";
-        String uprawnieniaDb = null;
+        String uprawnienia = null;
 
-        SQLConnection conn = new SQLConnection();
-        ResultSet rs = conn.makeQuery(query);
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
-        try{
-            if(rs.next()){
-                uprawnieniaDb = rs.getString("uprawnienia");
-            }
-        } catch (SQLException e){
+        try {
+            User user = session.find(User.class, login);
+            uprawnienia = user.getUprawnienia();
+        } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
-        } finally{
-            conn.closeConnect(rs);
+        } finally {
+            session.close();
         }
-
-        return uprawnieniaDb;
+        return uprawnienia;
     }
 
     public List<User> findAllUsers(){
         List<User> data = FXCollections.observableArrayList();
-        String query = "SELECT * FROM uzytkownicy WHERE uprawnienia = 'user';";
-        SQLConnection conn = new SQLConnection();
-        ResultSet rs = conn.makeQuery(query);
 
-        try{
-            while(rs.next()){
-                Integer id = rs.getInt("id");
-                String imie = rs.getString("imie");
-                String nazwisko = rs.getString("nazwisko");
-                String login = rs.getString("login");
-                String haslo = rs.getString("haslo");
-                String email = rs.getString("email");
-                String uprawnienia = rs.getString("uprawnienia");
-                String data_rejestracji = rs.getString("data_rejestracji");
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
 
-                User row = new User(id, imie, nazwisko, login, haslo,
-                        email, uprawnienia, data_rejestracji);
-                data.add(row);
-            }
-        } catch(SQLException e){
+        try {
+            Query query = session.createQuery("FROM uzytkownicy WHERE uprawnienia = 'user'");
+            data = query.list();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            conn.closeConnect(rs);
+            session.close();
         }
+
         return data;
     }
 
     public void save(User user){
-        String query = "INSERT INTO uzytkownicy(imie, nazwisko, login, haslo, " +
-                "email, uprawnienia, data_rejestracji) VALUES ('" +
-                user.getImie() + "', '" + user.getNazwisko() + "', '" +
-                user.getLogin() + "', '" + user.getHaslo() + "', '" +
-                user.getEmail() + "', '" + user.getUprawnienia() + "', '" +
-                user.getData_rejestracji() + "');";
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
-        SQLConnection conn = new SQLConnection();
-        conn.makeQueryToDatabase(query);
-        conn.closeConnect();
+        try {
+            session.save(user);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
     public void changePassword(String login, String newPassword){
-        String query = "UPDATE uzytkownicy SET haslo='" + newPassword +
-                "' WHERE login='" + login + "';";
-        SQLConnection conn = new SQLConnection();
-        conn.makeQueryToDatabase(query);
-        conn.closeConnect();
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            User user = session.find(User.class, login);
+            user.setHaslo(newPassword);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
     public void delete(String login){
-        String query = "DELETE FROM uzytkownicy WHERE login='" + login + "';";
-        SQLConnection conn = new SQLConnection();
-        conn.makeQueryToDatabase(query);
-        conn.closeConnect();
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            User user = session.find(User.class, login);
+            session.delete(user);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 }
