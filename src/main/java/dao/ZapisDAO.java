@@ -1,49 +1,97 @@
 package dao;
 
+import database.HibernateFactory;
 import javafx.collections.FXCollections;
 import model.Zapis;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import java.util.List;
 
 public class ZapisDAO {
 
     public void save(Zapis zapis){
-        String query = "INSERT INTO zapisy(id_uzytkownika, id_wydarzenia, typ_uczestnictwa, wyzywienie) " +
-                "VALUES (" + zapis.getIdUzytkownika() + ", " + zapis.getIdWydarzenia() + ", '" +
-                zapis.getTypUczestnictwa() + "', '" + zapis.getWyzywienie() + "');";
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
-        SQLConnection conn = new SQLConnection();
-        conn.makeQueryToDatabase(query);
-        conn.closeConnect();
+        try {
+            session.save(zapis);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
     public void confirm(Integer id){
-        String query = "UPDATE zapisy SET zgoda='tak' WHERE id=" + id + ";";
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
-        SQLConnection conn = new SQLConnection();
-        conn.makeQueryToDatabase(query);
-        conn.closeConnect();
+        try {
+            Zapis zapis = session.find(Zapis.class, id);
+            zapis.setZgoda("tak");
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
     public void reject(Integer id){
-        String query = "UPDATE zapisy SET zgoda='nie' WHERE id=" + id + ";";
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
-        SQLConnection conn = new SQLConnection();
-        conn.makeQueryToDatabase(query);
-        conn.closeConnect();
+        try {
+            Zapis zapis = session.find(Zapis.class, id);
+            zapis.setZgoda("nie");
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
-    public void deleteForUser(Integer id){
-        String query = "DELETE FROM zapisy WHERE id_uzytkownika=" + id + ";";
-        SQLConnection conn = new SQLConnection();
-        conn.makeQueryToDatabase(query);
+    public void deleteForUser(Integer id_uzytkownika){
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            Zapis zapis = session.find(Zapis.class, id_uzytkownika);
+            session.delete(zapis);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
-    public void deleteForEvent(Integer id){
-        String query = "DELETE FROM zapisy WHERE id_wydarzenia=" + id +";";
-        SQLConnection conn = new SQLConnection();
-        conn.makeQueryToDatabase(query);
+    public void deleteForEvent(Integer id_wydarzenia){
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            Zapis zapis = session.find(Zapis.class, id_wydarzenia);
+            session.delete(zapis);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
     public List<Zapis> findAllConfirmedZapis(){
@@ -60,26 +108,18 @@ public class ZapisDAO {
 
     public List<Zapis> getData(String query) {
         List<Zapis> data = FXCollections.observableArrayList();
-        SQLConnection conn = new SQLConnection();
-        ResultSet rs = conn.makeQuery(query);
+
+        HibernateFactory hibernateFactory = new HibernateFactory();
+        Session session = hibernateFactory.getSessionFactory().openSession();
 
         try {
-            while (rs.next()) {
-                Integer id = rs.getInt("id");
-                Integer id_uzytkownika = rs.getInt("id_uzytkownika");
-                Integer id_wydarzenia = rs.getInt("id_wydarzenia");
-                String typUczestnictwa = rs.getString("typ_uczestnictwa");
-                String wyzywienie = rs.getString("wyzywienie");
-
-                Zapis zapis = new Zapis(id, id_uzytkownika, id_wydarzenia, typUczestnictwa, wyzywienie);
-                data.add(zapis);
-            }
-        } catch (SQLException e) {
+            Query newQuery = session.createQuery(query);
+            data = newQuery.list();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            conn.closeConnect();
+            session.close();
         }
-
         return data;
     }
 }
