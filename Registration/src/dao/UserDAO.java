@@ -29,13 +29,13 @@ public class UserDAO{
     }
 
     public Boolean findOne(String login, String haslo){
-        String query = "SELECT * FROM uzytkownicy WHERE login = '" + login + "' AND " +
-                       "haslo = '" + haslo + "';";
+        String query = "FROM User WHERE login = '" + login + "' AND " +
+                       "haslo = '" + haslo + "'";
         return findUser(query);
     }
 
     public Boolean findOne(String login){
-        String query = "SELECT * FROM uzytkownicy WHERE login = '" + login + "';";
+        String query = "FROM User WHERE login = '" + login + "'";
         return findUser(query);
     }
 
@@ -47,7 +47,7 @@ public class UserDAO{
         Transaction transaction = session.beginTransaction();
 
         try {
-            User user = session.find(User.class, login);
+            User user = session.get(User.class, login);
             uprawnienia = user.getUprawnienia();
         } catch (Exception e) {
             transaction.rollback();
@@ -65,7 +65,7 @@ public class UserDAO{
         Session session = hibernateFactory.getSessionFactory().openSession();
 
         try {
-            Query query = session.createQuery("FROM uzytkownicy WHERE uprawnienia = 'user'");
+            Query query = session.createQuery("FROM User WHERE uprawnienia = 'user'");
             data = query.list();
         } catch (Exception e) {
             e.printStackTrace();

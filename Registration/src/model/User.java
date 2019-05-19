@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "uzytkownicy")
 public class User {
-    @Id
     @Column(name="id")
     @GeneratedValue(generator="incrementor")
     private Integer id;
@@ -16,6 +15,7 @@ public class User {
     @Column(name="nazwisko")
     private String nazwisko;
 
+    @Id
     @Column(name="login")
     private String login;
 
@@ -30,6 +30,8 @@ public class User {
 
     @Column(name="data_rejestracji")
     private String data_rejestracji;
+
+    public User(){}
 
     public User(Integer id, String imie, String nazwisko, String login, String haslo,
                 String email, String uprawnienia, String data_rejestracji){

@@ -36,7 +36,7 @@ public class EventDAO{
     }
 
     public List<Event> findNotConfirmedEventsForUser(Integer id){
-        String query = "SELECT DISTINCT id_wydarzenia FROM zapisy WHERE id_uzytkownika=" + id + " AND " + "zgoda IS NULL;";
+        String query = "SELECT DISTINCT id_wydarzenia FROM zapisy WHERE id_uzytkownika=" + id + " AND " + "zgoda IS NULL";
 
         return getData(query);
     }
@@ -60,7 +60,7 @@ public class EventDAO{
 
         for(Integer Id : ids){
             List<Event> newData;
-            String query2 = "SELECT * FROM wydarzenia WHERE id=" + Id + ";";
+            String query2 = "SELECT * FROM wydarzenia WHERE id=" + Id;
 
             HibernateFactory hibernateFactory2 = new HibernateFactory();
             Session session2 = hibernateFactory2.getSessionFactory().openSession();

@@ -23,6 +23,8 @@ public class Zapis {
     @Column(name="zgoda")
     private String zgoda;
 
+    public Zapis(){}
+
     public Zapis(Integer id, Integer idUzytkownika, Integer idWydarzenia, String typUczestnictwa, String wyzywienie) {
         this.id = id;
         this.idUzytkownika = idUzytkownika;

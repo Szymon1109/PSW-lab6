@@ -19,6 +19,8 @@ public class Event {
     @Column(name="termin")
     private String termin;
 
+    public Event(){}
+
     public Event(Integer id, String nazwa, String agenda, String termin){
         this.id = id;
         this.nazwa = nazwa;
