@@ -67,8 +67,12 @@ public class ZapisDAO {
 
         try {
             Query query = session.createQuery("FROM Zapis WHERE idUzytkownika=" + id_uzytkownika);
-            Zapis zapis = (Zapis)query.getSingleResult();
-            session.delete(zapis);
+            List<Zapis> list = query.list();
+
+            for (Zapis zapis : list){
+                session.delete(zapis);
+            }
+
             session.getTransaction().commit();
         } catch (Exception e) {
             transaction.rollback();
@@ -85,8 +89,12 @@ public class ZapisDAO {
 
         try {
             Query query = session.createQuery("FROM Zapis WHERE idWydarzenia=" + id_wydarzenia);
-            Zapis zapis = (Zapis)query.getSingleResult();
-            session.delete(zapis);
+            List<Zapis> list = query.list();
+
+            for (Zapis zapis : list){
+                session.delete(zapis);
+            }
+
             session.getTransaction().commit();
         } catch (Exception e) {
             transaction.rollback();
