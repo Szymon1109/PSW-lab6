@@ -258,10 +258,13 @@ public class MainController {
                 if(checkPassword()){
                     if(checkEmail(emailTxt)){
                         User user = new User(imieTxt, nazwiskoTxt, loginTxt, hasloTxt, emailTxt, uprawnienia, data);
-                        addData(user);
+                        //addData(user);
 
-                        Email email = new Email(user);
-                        email.sendEmail();
+                        //Email email = new Email(user);
+                        //email.sendEmail();
+
+                        Stage stage =(Stage)username.getScene().getWindow();
+                        stage.close();
 
                         openView("view/RejestrationView.fxml");
                         clearRTextField();
