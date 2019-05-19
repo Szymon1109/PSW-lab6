@@ -2,6 +2,8 @@ package model;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "zapisy")
 public class Zapis {
     @Id
     @Column(name="id")

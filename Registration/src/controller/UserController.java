@@ -272,7 +272,7 @@ public class UserController implements Initializable {
         Parent root = null;
 
         try {
-            root = FXMLLoader.load(getClass().getResource("../../resources/view/MainView.fxml"));
+            root = FXMLLoader.load(getClass().getResource("../view/MainView.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

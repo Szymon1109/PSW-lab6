@@ -18,7 +18,7 @@ public class EventDAO{
         Session session = hibernateFactory.getSessionFactory().openSession();
 
         try {
-            Query query = session.createQuery("FROM wydarzenia");
+            Query query = session.createQuery("FROM Event");
             data = query.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -30,13 +30,13 @@ public class EventDAO{
     }
 
     public List<Event> findConfirmedEventsForUser(Integer id){
-        String query = "SELECT DISTINCT id_wydarzenia FROM zapisy WHERE id_uzytkownika=" + id + " AND " + "zgoda='tak'";
+        String query = "SELECT DISTINCT id FROM Zapis WHERE idUzytkownika=" + id + " AND " + "zgoda='tak'";
 
         return getData(query);
     }
 
     public List<Event> findNotConfirmedEventsForUser(Integer id){
-        String query = "SELECT DISTINCT id_wydarzenia FROM zapisy WHERE id_uzytkownika=" + id + " AND " + "zgoda IS NULL";
+        String query = "SELECT DISTINCT id FROM Zapis WHERE idUzytkownika=" + id + " AND " + "zgoda IS NULL";
 
         return getData(query);
     }
@@ -59,14 +59,14 @@ public class EventDAO{
         List<Event> data = FXCollections.observableArrayList();
 
         for(Integer Id : ids){
-            List<Event> newData;
-            String query2 = "SELECT * FROM wydarzenia WHERE id=" + Id;
+            List<Event> newData = null;
+            String query2 = "FROM Event WHERE id=" + Id;
 
             HibernateFactory hibernateFactory2 = new HibernateFactory();
             Session session2 = hibernateFactory2.getSessionFactory().openSession();
 
             try {
-                Query newQuery = session2.createQuery(query);
+                Query newQuery = session2.createQuery(query2);
                 newData = newQuery.list();
                 data.addAll(newData);
             } catch (Exception e) {
@@ -85,7 +85,7 @@ public class EventDAO{
         Session session = hibernateFactory.getSessionFactory().openSession();
 
         try {
-            Query query = session.createQuery(String.format("FROM wydarzenia WHERE nazwa = '%s'", nazwa));
+            Query query = session.createQuery(String.format("FROM Event WHERE nazwa = '%s'", nazwa));
             data = query.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +118,8 @@ public class EventDAO{
         Transaction transaction = session.beginTransaction();
 
         try {
-            Event newEvent = session.find(Event.class, event.getId());
+            Query query = session.createQuery("FROM Event WHERE id=" + event.getId());
+            Event newEvent = (Event)query.getSingleResult();
             newEvent.setNazwa(event.getNazwa());
             newEvent.setAgenda(event.getAgenda());
             newEvent.setTermin(event.getTermin());
@@ -137,7 +138,8 @@ public class EventDAO{
         Transaction transaction = session.beginTransaction();
 
         try {
-            Event event = session.find(Event.class, nazwa);
+            Query query = session.createQuery("FROM Event WHERE nazwa='" + nazwa + "'");
+            Event event = (Event)query.getSingleResult();
             session.delete(event);
             session.getTransaction().commit();
         } catch (Exception e) {
