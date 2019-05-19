@@ -30,13 +30,13 @@ public class EventDAO{
     }
 
     public List<Event> findConfirmedEventsForUser(Integer id){
-        String query = "SELECT DISTINCT id FROM Zapis WHERE idUzytkownika=" + id + " AND " + "zgoda='tak'";
+        String query = "SELECT DISTINCT idWydarzenia FROM Zapis WHERE idUzytkownika=" + id + " AND zgoda='tak'";
 
         return getData(query);
     }
 
     public List<Event> findNotConfirmedEventsForUser(Integer id){
-        String query = "SELECT DISTINCT id FROM Zapis WHERE idUzytkownika=" + id + " AND " + "zgoda IS NULL";
+        String query = "SELECT DISTINCT idWydarzenia FROM Zapis WHERE idUzytkownika=" + id + " AND zgoda IS NULL";
 
         return getData(query);
     }

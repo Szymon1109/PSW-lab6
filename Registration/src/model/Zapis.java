@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Zapis {
     @Id
     @Column(name="id")
-    @GeneratedValue(generator="incrementor")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name="id_uzytkownika")

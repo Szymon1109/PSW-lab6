@@ -66,7 +66,8 @@ public class ZapisDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
-            Zapis zapis = session.find(Zapis.class, id_uzytkownika);
+            Query query = session.createQuery("FROM Zapis WHERE id_uzytkownika='" + id_uzytkownika + "'");
+            Zapis zapis = (Zapis)query.getSingleResult();
             session.delete(zapis);
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -83,7 +84,8 @@ public class ZapisDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
-            Zapis zapis = session.find(Zapis.class, id_wydarzenia);
+            Query query = session.createQuery("FROM Zapis WHERE id_wydarzenia='" + id_wydarzenia + "'");
+            Zapis zapis = (Zapis)query.getSingleResult();
             session.delete(zapis);
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -95,13 +97,13 @@ public class ZapisDAO {
     }
 
     public List<Zapis> findAllConfirmedZapis(){
-        String query = "SELECT * FROM zapisy WHERE zgoda='tak'";
+        String query = "FROM Zapis WHERE zgoda='tak'";
 
         return getData(query);
     }
 
     public List<Zapis> findAllNotConfirmedZapis(){
-        String query = "SELECT * FROM zapisy WHERE zgoda IS NULL";
+        String query = "FROM Zapis WHERE zgoda IS NULL";
 
         return getData(query);
     }
