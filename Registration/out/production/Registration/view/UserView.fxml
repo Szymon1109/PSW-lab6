@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserController">
+  <tabs>
+    <Tab text="Zapisy">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ComboBox fx:id="wydarzenia" layoutX="210.0" layoutY="65.0" onAction="#wydarzeniaChanged" prefHeight="26.0" prefWidth="179.0" />
+                  <Label alignment="CENTER" contentDisplay="BOTTOM" layoutY="25.0" prefHeight="26.0" prefWidth="600.0" text="Wybierz wydarzenie z listy dostępnych, aby dołączyć..." />
+                  <Label layoutX="36.0" layoutY="95.0" text="Agenda:" />
+                  <Label layoutX="434.0" layoutY="95.0" text="Termin wydarzenia:" />
+                  <ChoiceBox fx:id="typUczestnictwa" layoutX="280.0" layoutY="254.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="wyzywienie" layoutX="280.0" layoutY="292.0" prefWidth="150.0" />
+                  <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="233.0" layoutY="352.0" mnemonicParsing="false" onAction="#zapisz" prefHeight="30.0" prefWidth="65.0" text="Zapisz" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="172.0" layoutY="258.0" text="Typ uczestnictwa:" />
+                  <Label layoutX="200.0" layoutY="296.0" text="Wyżywienie:" />
+                  <Label fx:id="agenda" alignment="TOP_LEFT" layoutX="36.0" layoutY="121.0" prefHeight="108.0" prefWidth="382.0" style="-fx-background-color: FFFF; -fx-border-color: AAAA;" wrapText="true" />
+                  <Label fx:id="termin" alignment="CENTER" contentDisplay="BOTTOM" layoutX="434.0" layoutY="121.0" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: FFFF; -fx-border-color: AAAA;" />
+                  <Button fx:id="wyloguj" alignment="CENTER" contentDisplay="BOTTOM" layoutX="313.0" layoutY="352.0" mnemonicParsing="false" onAction="#wyloguj" prefHeight="30.0" prefWidth="76.0" text="Wyloguj" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Zatwierdzone wydarzenia">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="BOTTOM" layoutX="26.0" layoutY="22.0" prefHeight="31.0" prefWidth="241.0" text="Wydarzenia, na które zostałeś zapisany:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="492.0" layoutY="23.0" mnemonicParsing="false" onAction="#odswiez" prefHeight="30.0" prefWidth="79.0" text="Odśwież" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <TableView fx:id="tableZatw" layoutX="29.0" layoutY="73.0" prefHeight="313.0" prefWidth="542.0">
+                    <columns>
+                      <TableColumn fx:id="idZatw" prefWidth="30.0" text="ID" />
+                      <TableColumn fx:id="nazwaZatw" prefWidth="165.0" text="Nazwa" />
+                        <TableColumn fx:id="agendaZatw" prefWidth="275.0" text="Agenda" />
+                        <TableColumn fx:id="terminZatw" prefWidth="69.5999755859375" text="Termin" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Niezatwierdzone wydarzenia">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="BOTTOM" layoutX="28.0" layoutY="23.0" prefHeight="31.0" prefWidth="241.0" text="Wydarzenia, do których chcesz dołączyć:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Button alignment="CENTER" contentDisplay="BOTTOM" layoutX="490.0" layoutY="23.0" mnemonicParsing="false" onAction="#odswiez" prefHeight="30.0" prefWidth="79.0" text="Odśwież" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <TableView fx:id="tableNiezatw" layoutX="28.0" layoutY="72.0" prefHeight="313.0" prefWidth="542.0">
+                     <columns>
+                        <TableColumn fx:id="idNiezatw" prefWidth="30.0" text="ID" />
+                        <TableColumn fx:id="nazwaNiezatw" prefWidth="165.0" text="Nazwa" />
+                        <TableColumn fx:id="agendaNiezatw" prefWidth="275.0" text="Agenda" />
+                        <TableColumn fx:id="terminNiezatw" prefWidth="69.5999755859375" text="Termin" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+  </tabs>
+</TabPane>
