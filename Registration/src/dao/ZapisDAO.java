@@ -66,7 +66,7 @@ public class ZapisDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
-            Query query = session.createQuery("FROM Zapis WHERE id_uzytkownika='" + id_uzytkownika + "'");
+            Query query = session.createQuery("FROM Zapis WHERE idUzytkownika=" + id_uzytkownika);
             Zapis zapis = (Zapis)query.getSingleResult();
             session.delete(zapis);
             session.getTransaction().commit();
@@ -84,7 +84,7 @@ public class ZapisDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
-            Query query = session.createQuery("FROM Zapis WHERE id_wydarzenia='" + id_wydarzenia + "'");
+            Query query = session.createQuery("FROM Zapis WHERE idWydarzenia=" + id_wydarzenia);
             Zapis zapis = (Zapis)query.getSingleResult();
             session.delete(zapis);
             session.getTransaction().commit();
