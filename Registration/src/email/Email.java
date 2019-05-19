@@ -11,8 +11,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 
 public class Email {
-    private final String username = "TemusOrigami@gmail.com";
-    private final String password = "ZP()PS\\/\\/Utp@";
+    private final String username = "psw.lab.456@gmail.com";
+    private final String password = "zaq1@WSX";
     private User user;
     private String text;
 
